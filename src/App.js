@@ -1,15 +1,15 @@
-import React, { Component } from 'react'
-
+import React, { Children, Component } from 'react'
+import { ReactDOM } from 'react-dom'
 import './App.css'
 
 class Form extends Component {
 	constructor(props) {
 		super(props)
-        this.myRef = React.createRef();
+		this.myRef = React.createRef()
 	}
-    componentDidMount(){
-        this.myRef.current.focus();
-    }
+	componentDidMount() {
+		this.myRef.current.focus()
+	}
 
 	render() {
 		return (
@@ -19,7 +19,8 @@ class Form extends Component {
 						<label htmlFor='exampleFormControlInput1' className='form-label'>
 							Email address
 						</label>
-						<input ref={this.myRef}
+						<input
+							ref={this.myRef}
 							type='email'
 							className='form-control'
 							id='exampleFormControlInput1'
@@ -27,19 +28,31 @@ class Form extends Component {
 						/>
 					</div>
 					<div className='mb-3'>
-						<label htmlFor='exampleFormControlTextarea1' className='form-label'>
-							Example textarea
-						</label>
 						<textarea
 							className='form-control'
 							id='exampleFormControlTextarea1'
 							rows='3'
 						></textarea>
 					</div>
+                    <Portal>
+                        <Msg/>
+                    </Portal>
 				</form>
 			</div>
 		)
 	}
+}
+const Portal = props=>{
+    const node = document.createElement('div');
+    document.body.appendChild(node);
+    return ReactDOM.createPortal(props.children,node);
+}
+const Msg = () => {
+	return (
+		<label htmlFor='exampleFormControlTextarea1' className='form-label'>
+			Example textarea
+		</label>
+	)
 }
 
 function App() {
